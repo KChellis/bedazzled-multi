@@ -4,28 +4,31 @@ var currentScore = 0;
 var newScore = 0;
 var coordArray = [];
 
-function Gem(type) { //creates a gem object with a type and value
+function Gem(type, value) { //creates a gem object with a type and value
   this.type = type;
-  this.pointVal = 50;
+  this.pointVal = value;
 }
 
 function Board() { // Constructs a board of empty arrays that gem objects can be pushed into
   this.board = [[], [], [], [], [], [], []];
 }
 
-Board.prototype.genGem = function(max) {  // Creates gems randomly and pushes them into a board
+Board.prototype.genGem = function() {  // Creates gems randomly and pushes them into a board
   var gem;
+  var max = 9;
+  var numbers = [0, 0, 0, 0, 1, 1, 1, 2, 2, 3];
   for (var i = 0; i < this.board.length; i++) {
     for (var j = this.board[i].length; j < this.board.length; j++) {
-      var number = Math.floor(Math.random() * (max + 1));
+      var number = numbers[Math.floor(Math.random() * (max + 1))];
+      console.log(number);
       if (number === 0) {
-        gem = new Gem('blue');
+        gem = new Gem('blue', 25);
       } else if (number === 1) {
-        gem = new Gem('red');
+        gem = new Gem('red', 50);
       } else if (number === 2) {
-        gem = new Gem('green');
+        gem = new Gem('green', 75);
       } else if (number === 3) {
-        gem = new Gem('yellow');
+        gem = new Gem('yellow', 100);
       }
       this.board[i].push(gem);
     }
@@ -204,7 +207,7 @@ Board.prototype.checkBoard = function () { //checks to see if new matches were m
     this.clearGems();
     drawClear(this);
     this.removeBursts();
-    this.genGem(3);
+    this.genGem();
     drawNewGems(this);
     scoreTicker();
     setTimeout(this.checkBoard.bind(this), 200);
@@ -212,11 +215,11 @@ Board.prototype.checkBoard = function () { //checks to see if new matches were m
 };
 
 Board.prototype.startBoard = function () { //sets up a randomly generated board and removes matches before displaying
-  this.genGem(3);
+  this.genGem();
   while (this.match()) {
     this.clearGems();
     this.removeBursts();
-    this.genGem(3);
+    this.genGem();
   }
   newScore = 0;
   currentScore = 0;
