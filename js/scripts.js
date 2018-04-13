@@ -1,68 +1,13 @@
 // Backend Logic
-function Gem(type) { //creates a gem object with a type and value
-  this.type = type;
-  this.pointVal = 50;
-}
-
 var matches;
 var currentScore = 0;
 var newScore = 0;
 var coordArray = [];
-var gem1 = new Gem ('green');
-var gem2 = new Gem ('blue');
-var gem3 = new Gem ('blue');
-var gem4 = new Gem ('red');
-var gem5 = new Gem ('blue');
-var gem6 = new Gem ('blue');
-var gem7 = new Gem ('green');
 
-var gem8 = new Gem ('blue');
-var gem9 = new Gem ('blue');
-var gem10 = new Gem ('green');
-var gem11 = new Gem ('red');
-var gem12 = new Gem ('green');
-var gem13 = new Gem ('blue');
-var gem14 = new Gem ('blue');
-
-var gem15 = new Gem ('yellow');
-var gem16 = new Gem ('green');
-var gem17 = new Gem ('red');
-var gem18 = new Gem ('yellow');
-var gem19 = new Gem ('red');
-var gem20 = new Gem ('green');
-var gem21 = new Gem ('yellow');
-
-var gem22 = new Gem ('green');
-var gem23 = new Gem ('red');
-var gem24 = new Gem ('yellow');
-var gem25 = new Gem ('blue');
-var gem26 = new Gem ('yellow');
-var gem27 = new Gem ('red');
-var gem28 = new Gem ('green');
-
-var gem29 = new Gem ('yellow');
-var gem30 = new Gem ('green');
-var gem31 = new Gem ('red');
-var gem32 = new Gem ('yellow');
-var gem33 = new Gem ('red');
-var gem34 = new Gem ('green');
-var gem35 = new Gem ('yellow');
-
-var gem36 = new Gem ('blue');
-var gem37 = new Gem ('blue');
-var gem38 = new Gem ('green');
-var gem39 = new Gem ('red');
-var gem40 = new Gem ('green');
-var gem41 = new Gem ('blue');
-var gem42 = new Gem ('blue');
-
-var gem43 = new Gem ('green');
-var gem44 = new Gem ('blue');
-var gem45 = new Gem ('blue');
-var gem46 = new Gem ('red');
-var gem47 = new Gem ('blue');
-var gem48 = new Gem ('blue');
-var gem49 = new Gem ('green');
+function Gem(type) { //creates a gem object with a type and value
+  this.type = type;
+  this.pointVal = 50;
+}
 
 function Board() { // Constructs a board of empty arrays that gem objects can be pushed into
   this.board = [[], [], [], [], [], [], []];
@@ -276,7 +221,39 @@ Board.prototype.startBoard = function () { //sets up a randomly generated board 
   newScore = 0;
   currentScore = 0;
 };
-
+var green;
+var blue;
+var yellow;
+var red;
+var set;
+function jewelSet() {
+  if (set === "drwho") {
+    green = "angel.png";
+    blue = "tardis.png";
+    yellow = "cyber.jpg";
+    red = "dalek.png";
+  }else if (set === "harry") {
+    green = "slyth.png";
+    blue = "raven.png";
+    yellow = "huff.png";
+    red = "gryff.gif";
+  }else if (set === "zelda") {
+    green = "rupee.png";
+    blue = "octo.png";
+    yellow = "trif.png";
+    red = "heart.png";
+  }else if (set === "mario") {
+    green = "shell.png";
+    blue = "flower.png";
+    yellow = "star.png";
+    red = "mush.png";
+  } else {
+    green = "green.svg";
+    blue = "blue.svg";
+    yellow = "yellow.svg";
+    red = "red.svg";
+  }
+}
 // User Interface Logic
 function scoreTicker() {  //make score count up by 5 and animates DOM score using timeouts
   if(currentScore < newScore) {
@@ -288,18 +265,18 @@ function scoreTicker() {  //make score count up by 5 and animates DOM score usin
 
 function drawHelper(board, i, j) { //draws gems into the html board
   var cellID = '#' + i + '-' + j;
-  if (typeof(board.board[i][j]) === 'undefined'){
+  if (typeof(board.board[i][j]) === "undefined"){
     return;
-  } else if(board.board[i][j] === 'burst'){
+  } else if(board.board[i][j] === "burst"){
     $(cellID).empty().append('<img src="img/burst.gif">');
   } else if (board.board[i][j].type === 'blue') {
-    $(cellID).empty().append('<img src="img/blue.svg">');
+    $(cellID).empty().append('<img src="img/'+ blue + '">');
   } else if (board.board[i][j].type === 'red') {
-    $(cellID).empty().append('<img src="img/red.svg">');
+    $(cellID).empty().append('<img src="img/'+ red + '">');
   } else if (board.board[i][j].type === 'green') {
-    $(cellID).empty().append('<img src="img/green.svg">');
+    $(cellID).empty().append('<img src="img/'+ green + '">');
   } else if (board.board[i][j].type === 'yellow') {
-    $(cellID).empty().append('<img src="img/yellow.svg">');
+    $(cellID).empty().append('<img src="img/'+ yellow + '">');
   }
 }
 
@@ -331,7 +308,7 @@ function drawNewGems(board, i = -1, j = -1) { //draws board with timeouts to let
 $(document).ready(function() {
   $('#instructions').modal('show');
   var newBoard = new Board();
-  newBoard.board = [[gem1, gem2, gem3, gem4, gem5, gem6, gem7], [gem8, gem9, gem10, gem11, gem12, gem13, gem14], [gem15, gem16, gem17, gem18, gem19, gem20, gem21], [gem22, gem23, gem24, gem25, gem26, gem27, gem28], [gem29, gem30, gem31, gem32, gem33, gem34, gem35], [gem36, gem37, gem38, gem39, gem40, gem41, gem42], [gem43, gem44, gem45, gem46, gem47, gem48, gem49]];
+  newBoard.startBoard();
   drawClear(newBoard);
   // gathers coordinates of clicked gems and pushes coordinates into an array
   $('.cell').click(function() {
@@ -344,7 +321,8 @@ $(document).ready(function() {
       coordArray.push(xCoord,yCoord);
       $('.cell').addClass('no-click');
       $(this).addClass('highlight');
-      $('.btn').addClass('no-click');
+      $('#bedazzle').addClass('no-click');
+      $('#choose').addClass('no-click');
       $('[id='+ xCoord + '-' + (yCoord + 1) + ']').addClass('highlight').removeClass('no-click');
       $('[id='+ xCoord + '-' + (yCoord - 1) + ']').addClass('highlight').removeClass('no-click');
       $('[id='+ (xCoord + 1) + '-' + yCoord + ']').addClass('highlight').removeClass('no-click');
@@ -365,15 +343,27 @@ $(document).ready(function() {
       setTimeout(function() {
         coordArray=[];
         $('.cell').removeClass('no-click');
-        $('.btn').removeClass('no-click');
+        $('#bedazzle').removeClass('no-click');
+        $('#choose').removeClass('no-click');
       }, 2000);
     }
   });
-  // generates a new random board and resets score
-  $('.btn').click(function(){
+
+  $('#bedazzle').click(function(){
     newBoard = new Board();
     newBoard.startBoard();
     drawClear(newBoard);
     $('#game-score').text(currentScore);
+  });
+  $('.jewel').click(function(){
+    $('.hidden').show();
+    $('.jewels').hide();
+    set = $(this).val();
+    jewelSet();
+    drawClear(newBoard);
+  });
+  $('#choose').click(function(){
+    $('.hidden').hide();
+    $('.jewels').show();
   });
 });

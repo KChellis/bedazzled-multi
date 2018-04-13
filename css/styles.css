@@ -76,7 +76,6 @@ h1 {
   font-family: 'Bungee Shade', cursive;
 }
 
-
 .btn, .btn:active, .btn:focus{
   outline: none;
   font-family: 'Bungee Inline', cursive;
@@ -87,6 +86,7 @@ h1 {
   padding: 10px;
   height: 80px;
   width: 260px;
+  margin: 5px;
 }
 
 
@@ -106,4 +106,7 @@ h1 {
 
 .modal-body span {
   font-family: 'Bungee Inline', cursive;
+}
+.hidden{
+  display: none;
 }
